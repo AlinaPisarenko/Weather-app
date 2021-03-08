@@ -20,6 +20,7 @@ input {
   border-style: groove;
 }
 .weather-app {
+  display: block;
   padding: 20px;
   background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
 }
@@ -37,7 +38,7 @@ h2 {
   font-size: 18px;
 }
 .container {
-  padding: 20px;
+  padding: 0;
 }
 .buttons {
   color: #fff;
