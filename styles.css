@@ -74,6 +74,7 @@ h2 {
   font-size: 120px;
   display: block;
   text-align: center;
+  margin: 0 auto;
 }
 .col-4.mainInfo {
   text-align: center;

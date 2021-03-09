@@ -98,7 +98,11 @@ function showTemp(response) {
   celciusTemperatureMin = response.data.main.temp_min;
   celciusTemperatureMax = response.data.main.temp_max;
   celciusTemperatureFeelsLike = response.data.main.feels_like;
-
+  let iconElement = document.querySelector(`#icon`);
+  iconElement.setAttribute(
+    `src`,
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
   document.querySelector(`#main-temperature`).innerHTML =
     Math.round(celciusTemperature) + `°`;
   document.querySelector(
