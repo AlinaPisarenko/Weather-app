@@ -66,6 +66,13 @@ function tempC(event) {
   event.preventDefault();
   let mainTemp = document.querySelector(`#main-temperature`);
   mainTemp.innerHTML = Math.round(celciusTemperature) + `°`;
+  let minTemp = document.querySelector(`#min-temp`);
+  minTemp.innerHTML = Math.round(celciusTemperatureMin) + `°`;
+  let maxTemp = document.querySelector(`#max-temp`);
+  maxTemp.innerHTML = Math.round(celciusTemperatureMax) + `°`;
+  let feelsLIkeTemp = document.querySelector(`#feels-like-temp`);
+  feelsLIkeTemp.innerHTML =
+    `Feels like: ` + Math.round(celciusTemperatureFeelsLike) + `°`;
 }
 let buttonCel = document.querySelector(`#change-celcius`);
 buttonCel.addEventListener(`click`, tempC);
