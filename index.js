@@ -44,16 +44,28 @@ form.addEventListener(`submit`, search);
 
 function tempF(event) {
   event.preventDefault();
+  let FahrenheitTemp = (celciusTemperature * 9) / 5 + 32;
   let mainTemp = document.querySelector(`#main-temperature`);
-  mainTemp.innerHTML = `66°F`;
+  mainTemp.innerHTML = Math.round(FahrenheitTemp) + `°`;
+  let fahrenheitTempMin = (celciusTemperatureMin * 9) / 5 + 32;
+  let minTemp = document.querySelector(`#min-temp`);
+  minTemp.innerHTML = Math.round(fahrenheitTempMin) + `°`;
+  let fahrenheitTempMax = (celciusTemperatureMax * 9) / 5 + 32;
+  let maxTemp = document.querySelector(`#max-temp`);
+  maxTemp.innerHTML = Math.round(fahrenheitTempMax) + `°`;
+  let fahrenheitTempFeelsLike = (celciusTemperatureFeelsLike * 9) / 5 + 32;
+  let feelsLIkeTemp = document.querySelector(`#feels-like-temp`);
+  feelsLIkeTemp.innerHTML =
+    `Feels like: ` + Math.round(fahrenheitTempFeelsLike) + `°`;
 }
+
 let buttonFar = document.querySelector(`#change-fahrenheit`);
 buttonFar.addEventListener(`click`, tempF);
 
 function tempC(event) {
   event.preventDefault();
   let mainTemp = document.querySelector(`#main-temperature`);
-  mainTemp.innerHTML = `19°C`;
+  mainTemp.innerHTML = Math.round(celciusTemperature) + `°`;
 }
 let buttonCel = document.querySelector(`#change-celcius`);
 buttonCel.addEventListener(`click`, tempC);
@@ -67,31 +79,30 @@ function currentLocation(position) {
 }
 
 function showTemp(response) {
-  console.log(response.data);
+  celciusTemperature = response.data.main.temp;
+  celciusTemperatureMin = response.data.main.temp_min;
+  celciusTemperatureMax = response.data.main.temp_max;
+  celciusTemperatureFeelsLike = response.data.main.feels_like;
 
-  document.querySelector(`#main-temperature`).innerHTML = `${Math.round(
-    response.data.main.temp
-  )}°C`;
+  document.querySelector(`#main-temperature`).innerHTML =
+    Math.round(celciusTemperature) + `°`;
   document.querySelector(
     `#description-sign`
   ).innerHTML = `${response.data.weather[0].description}`;
-  document.querySelector(`#max-temp`).innerHTML = `${Math.round(
-    response.data.main.temp_max
-  )}°C`;
-  document.querySelector(`#min-temp`).innerHTML = `${Math.round(
-    response.data.main.temp_min
-  )}°C`;
+  document.querySelector(`#max-temp`).innerHTML =
+    Math.round(celciusTemperatureMax) + `°`;
+  document.querySelector(`#min-temp`).innerHTML =
+    Math.round(celciusTemperatureMin) + `°`;
   document.querySelector(`#main-location`).innerHTML = `${response.data.name}`;
-  document.querySelector(
-    `#feels-like-temp`
-  ).innerHTML = `Feels like: ${Math.round(response.data.main.feels_like)}°C`;
+  document.querySelector(`#feels-like-temp`).innerHTML =
+    `Feels like: ` + Math.round(celciusTemperatureFeelsLike) + `°`;
 
   document.querySelector(
     `#humidity-now`
   ).innerHTML = `Humidity: ${response.data.main.humidity}%`;
   document.querySelector(`#wind-speed-now`).innerHTML = `Wind: ${Math.round(
     response.data.wind.speed
-  )} min/sec`;
+  )} m/s`;
   document.querySelector(
     `#pressure-now`
   ).innerHTML = `Pressure: ${response.data.main.pressure} hPa`;
@@ -102,4 +113,9 @@ function getLocation(event) {
 }
 let currentLocationButton = document.querySelector(`#current-location-button`);
 currentLocationButton.addEventListener(`click`, getLocation);
+
+let celciusTemperature = null;
+let celciusTemperatureMin = null;
+let celciusTemperatureMax = null;
+let celciusTemperatureFeelsLike = null;
 searchCity(`New York`);
