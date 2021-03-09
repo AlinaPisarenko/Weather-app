@@ -23,7 +23,7 @@ input {
 .weather-app {
   display: block;
   padding: 20px;
-  background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
 }
 h2 {
   font-size: 20px;
@@ -40,6 +40,7 @@ h2 {
 }
 .container {
   padding: 0;
+  margin: 0;
 }
 .buttons {
   color: #fff;
@@ -113,4 +114,7 @@ h2 {
 .col-4 .inactive {
   color: #fff;
   opacity: 0.5;
+}
+div .col.forecast-hours {
+  padding: 0;
 }

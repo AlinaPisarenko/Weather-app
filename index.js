@@ -1,13 +1,6 @@
 //currentTime
-function currentDate(date) {
-  let hours = date.getHours();
-  let AmOrPm = hours >= 12 ? `pm` : `am`;
-  hours = hours % 12 || 12;
-  let minutes = date.getMinutes();
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  let finalTime = hours + `:` + minutes + ` ` + AmOrPm;
+function currentDate(timestamp) {
+  date = new Date(timestamp);
   let days = [
     `Sunday`,
     `Monday`,
@@ -19,17 +12,58 @@ function currentDate(date) {
   ];
   let day = days[date.getDay()];
 
-  return `${day} ${finalTime}`;
+  return `${day} ${formatHours(timestamp)}`;
 }
 let currentTime = new Date();
 let timeElement = document.querySelector(`h2`);
 timeElement.innerHTML = currentDate(currentTime);
 //Searching for a City
+function formatHours(timestamp) {
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  let AmOrPm = hours >= 12 ? `pm` : `am`;
+  hours = hours % 12 || 12;
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  let finalTime = hours + `:` + minutes + ` ` + AmOrPm;
+  return finalTime;
+}
+function showForecast(response) {
+  forecastElement = document.querySelector(`#forecast`);
+  forecastElement.innerHTML = null;
+  let forecast = null;
+  for (let index = 0; index < 6; index++) {
+    forecast = response.data.list[index];
+    celciusTemperatureMinForecast = forecast.main.temp_min;
+    celciusTemperatureMaxForecast = forecast.main.temp_max;
+    forecastElement.innerHTML += `  <div class="col forecast-hours border-right border-left">
+            ${formatHours(forecast.dt * 1000)} <br />
+            <img src="http://openweathermap.org/img/wn/${
+              forecast.weather[0].icon
+            }@2x.png" class="fas fa-cloud-sun"></img>
+           <div class="row row-cols-2">
+              <div class="col" id="low-temp-forecast">${Math.round(
+                forecast.main.temp_min
+              )}°</div>
+
+              <div class="col" id="max-temp-forecast">${Math.round(
+                forecast.main.temp_max
+              )}°</div>
+            </div>
+          </div>
+          `;
+  }
+}
 
 function searchCity(city) {
   let apiKey = `c9af21311efae38764da31570e4feab2`;
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
   axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemp);
+
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric`;
+  axios.get(`${apiUrl}&appid=${apiKey}`).then(showForecast);
 }
 
 function search(event) {
@@ -61,6 +95,8 @@ function tempF(event) {
   let feelsLIkeTemp = document.querySelector(`#feels-like-temp`);
   feelsLIkeTemp.innerHTML =
     `Feels like: ` + Math.round(fahrenheitTempFeelsLike) + `°`;
+
+  maxTempForecast.innerHTML = Math.round(fahrenheitTempMaxForecast) + `°`;
 }
 
 let buttonFar = document.querySelector(`#change-fahrenheit`);
