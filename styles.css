@@ -101,3 +101,15 @@ h2 {
   color: #fff;
   text-align: center;
 }
+.col-4 .active {
+  color: #fff;
+
+  cursor: default;
+}
+.col-4 .active:hover {
+  text-decoration: none;
+}
+.col-4 .inactive {
+  color: #fff;
+  opacity: 0.5;
+}

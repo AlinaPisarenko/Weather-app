@@ -44,6 +44,10 @@ form.addEventListener(`submit`, search);
 
 function tempF(event) {
   event.preventDefault();
+  buttonCel.classList.remove("active");
+  buttonCel.classList.add("inactive");
+  buttonFar.classList.remove("inactive");
+  buttonFar.classList.add("active");
   let FahrenheitTemp = (celciusTemperature * 9) / 5 + 32;
   let mainTemp = document.querySelector(`#main-temperature`);
   mainTemp.innerHTML = Math.round(FahrenheitTemp) + `°`;
@@ -64,6 +68,10 @@ buttonFar.addEventListener(`click`, tempF);
 
 function tempC(event) {
   event.preventDefault();
+  buttonFar.classList.add("inactive");
+  buttonFar.classList.remove("active");
+  buttonCel.classList.remove("inactive");
+  buttonCel.classList.add("active");
   let mainTemp = document.querySelector(`#main-temperature`);
   mainTemp.innerHTML = Math.round(celciusTemperature) + `°`;
   let minTemp = document.querySelector(`#min-temp`);
