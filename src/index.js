@@ -17,7 +17,7 @@ function currentDate(timestamp) {
 let currentTime = new Date();
 let timeElement = document.querySelector(`h2`);
 timeElement.innerHTML = currentDate(currentTime);
-//Searching for a City
+
 function formatHours(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
@@ -36,8 +36,6 @@ function showForecast(response) {
   let forecast = null;
   for (let index = 0; index < 6; index++) {
     forecast = response.data.list[index];
-    celciusTemperatureMinForecast = forecast.main.temp_min;
-    celciusTemperatureMaxForecast = forecast.main.temp_max;
     forecastElement.innerHTML += `  <div class="col forecast-hours border-right border-left">
             ${formatHours(forecast.dt * 1000)} <br />
             <img src="http://openweathermap.org/img/wn/${
@@ -74,8 +72,6 @@ function search(event) {
 let form = document.querySelector(`#search-text`);
 form.addEventListener(`submit`, search);
 
-//Celcius to Fahrenheit
-
 function tempF(event) {
   event.preventDefault();
   buttonCel.classList.remove("active");
@@ -84,19 +80,18 @@ function tempF(event) {
   buttonFar.classList.add("active");
   let FahrenheitTemp = (celciusTemperature * 9) / 5 + 32;
   let mainTemp = document.querySelector(`#main-temperature`);
-  mainTemp.innerHTML = Math.round(FahrenheitTemp) + `°`;
   let fahrenheitTempMin = (celciusTemperatureMin * 9) / 5 + 32;
   let minTemp = document.querySelector(`#min-temp`);
-  minTemp.innerHTML = Math.round(fahrenheitTempMin) + `°`;
   let fahrenheitTempMax = (celciusTemperatureMax * 9) / 5 + 32;
   let maxTemp = document.querySelector(`#max-temp`);
-  maxTemp.innerHTML = Math.round(fahrenheitTempMax) + `°`;
   let fahrenheitTempFeelsLike = (celciusTemperatureFeelsLike * 9) / 5 + 32;
   let feelsLIkeTemp = document.querySelector(`#feels-like-temp`);
+
+  mainTemp.innerHTML = Math.round(FahrenheitTemp) + `°`;
+  minTemp.innerHTML = Math.round(fahrenheitTempMin) + `°`;
+  maxTemp.innerHTML = Math.round(fahrenheitTempMax) + `°`;
   feelsLIkeTemp.innerHTML =
     `Feels like: ` + Math.round(fahrenheitTempFeelsLike) + `°`;
-
-  maxTempForecast.innerHTML = Math.round(fahrenheitTempMaxForecast) + `°`;
 }
 
 let buttonFar = document.querySelector(`#change-fahrenheit`);
@@ -109,12 +104,12 @@ function tempC(event) {
   buttonCel.classList.remove("inactive");
   buttonCel.classList.add("active");
   let mainTemp = document.querySelector(`#main-temperature`);
-  mainTemp.innerHTML = Math.round(celciusTemperature) + `°`;
   let minTemp = document.querySelector(`#min-temp`);
-  minTemp.innerHTML = Math.round(celciusTemperatureMin) + `°`;
   let maxTemp = document.querySelector(`#max-temp`);
-  maxTemp.innerHTML = Math.round(celciusTemperatureMax) + `°`;
   let feelsLIkeTemp = document.querySelector(`#feels-like-temp`);
+  mainTemp.innerHTML = Math.round(celciusTemperature) + `°`;
+  minTemp.innerHTML = Math.round(celciusTemperatureMin) + `°`;
+  maxTemp.innerHTML = Math.round(celciusTemperatureMax) + `°`;
   feelsLIkeTemp.innerHTML =
     `Feels like: ` + Math.round(celciusTemperatureFeelsLike) + `°`;
 }
@@ -151,7 +146,6 @@ function showTemp(response) {
   document.querySelector(`#main-location`).innerHTML = `${response.data.name}`;
   document.querySelector(`#feels-like-temp`).innerHTML =
     `Feels like: ` + Math.round(celciusTemperatureFeelsLike) + `°`;
-
   document.querySelector(
     `#humidity-now`
   ).innerHTML = `Humidity: ${response.data.main.humidity}%`;

@@ -23,7 +23,7 @@ input {
 .weather-app {
   display: block;
   padding: 20px;
-  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+  background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
 }
 h2 {
   font-size: 20px;
