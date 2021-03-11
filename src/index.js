@@ -31,6 +31,7 @@ function formatHours(timestamp) {
   return finalTime;
 }
 function showForecast(response) {
+  console.log(response);
   forecastElement = document.querySelector(`#forecast`);
   forecastElement.innerHTML = null;
   let forecast = null;
@@ -121,7 +122,9 @@ function currentLocation(position) {
   let lon = position.coords.longitude;
   let apiKey = `c9af21311efae38764da31570e4feab2`;
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric`;
-  axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemp);
+  axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemp).then(showForecast);
+  posForecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&`;
+  axios.get(`${posForecastUrl}&appid=${apiKey}`).then(showForecast);
 }
 
 function showTemp(response) {
